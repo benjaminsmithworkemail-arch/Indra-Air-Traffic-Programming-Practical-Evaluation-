@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <vector>
 #include <cstddef>
@@ -20,36 +21,35 @@ int main()
 {
     printf("Started:\n");
     
-    //file name
-    const char* filename = "Test_File.txt";
+    //file name (this is for local testing purposes)
+    const char* filename = "C:\\Users\\Ben Smith\\OneDrive\\Desktop\\School documents\\OutsideWork\\Indra-Air-Traffic-Programming-Practical-Evaluation\\Test_File.txt";
 
     //open the file
     std::ifstream file(filename, std::ios::binary);
     if (!file)
     {
-        printf("Could not open file %s", filename);
+        printf("Could not open file: %s\n", filename);
         return 1;
+    }
+    else
+    {
+        printf("File: %s open\n", filename);
     }
     
     //create the trie that holds all findings
     Trie trie;
-
+    
     const size_t bufferSize = 1024 * 1024; // 1MB buffer used to reduce file read calls
     std::vector<char> buffer(bufferSize);
 
-    std::string window(4, 0); // initialize with 4 placeholder characters
+    std::string window;
 
-    //get the first 4 chars and prep them in window
-    for (int i = 0; i < 4; i++)
+    char c;
+    // Fill the window with first 4 lowercase letters
+    while (window.size() < 4 && file.get(c))
     {
-        char c;
-        if (!file.get(c))
-        {
-            printf("could not grab first 4 chars");
-            return 1;
-        }
-        window[i] = c;
-    }    
+        window.push_back(c);
+    }   
     trie.AddWindowGrams(window);
     
     //read 1MB chunks
@@ -77,8 +77,8 @@ int main()
     // Count the last 1-gram (last character only)
     std::string last1 = window.substr(3, 1);
     trie.AddWindowGrams(last1);
-    
-   
+
+    trie.PrintLargestGramFrequencies();
 }
 
-
+ 
