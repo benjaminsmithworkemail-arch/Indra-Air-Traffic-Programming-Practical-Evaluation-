@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build and run",
             "type": "shell",
             "command": "g++",
             "args": [
@@ -14,11 +14,23 @@
                 "${workspaceFolder}/output/Trie.exe"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/Indra-Air-Traffic-Programming-Practical-Evaluation"
+                "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": "$gcc",
             "group": {
                 "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "run exe",
+            "type": "shell",
+            "command": "${workspaceFolder}/output/Trie.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "test",
                 "isDefault": true
             }
         }
